@@ -1,15 +1,11 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import {
-  Paper,
-  Button,
-  InputBase,
-  Collapse,
-} from "@material-ui/core";
+import { Paper, Button, InputBase, Collapse } from "@material-ui/core";
 import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
+import IconButton from "@material-ui/core/IconButton";
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -56,7 +52,6 @@ export default function CreateKeep() {
   let test = { color: color };
   const classes = useStyles(test);
 
-
   const handleClick = () => {
     setVisible(true);
   };
@@ -72,13 +67,12 @@ export default function CreateKeep() {
       setVisible(false);
       setTitle("");
       setContent("");
-      setColor("")
+      setColor("");
     }
     setVisible(false);
     setTitle("");
     setContent("");
-    setColor("")
-
+    setColor("");
   };
   async function addKeep(keep) {
     api
@@ -98,45 +92,50 @@ export default function CreateKeep() {
   }
   return (
     // <ClickAwayListener onClickAway={handleClickAway}>
-      <div className="keepMake">
-        <Paper
-          elevation={2}
-          style={{ display: "inline-block", alignItems: "center" }}
-          width="25%"
-          className={classes.keepBG}
+    <div className="keepMake">
+      <Paper
+        elevation={2}
+        style={{ display: "inline-block", alignItems: "center" }}
+        width="25%"
+        className={classes.keepBG}
+      >
+        <Collapse
+          in={visible}
+          classes={{ wrapperInner: classes.wrapper }}
+          collapsedSize="2.7rem"
         >
-          <Collapse
-            in={visible}
-            classes={{ wrapperInner: classes.wrapper }}
-            collapsedSize="2.7rem"
-          >
-            <InputBase
-              placeholder={visible ? "Title" : "Take a note..."}
-              onClick={handleClick}
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              className="input-base"
-            ></InputBase>
-            {visible ? (
-              <div>
-                <InputBase
-                  placeholder={"Take a note"}
-                  value={content}
-                  onChange={(event) => setContent(event.target.value)}
-                  className="input-base"
-                ></InputBase>
-                <div className="actionBar">
+          <InputBase
+            placeholder={visible ? "Title" : "Take a note..."}
+            onClick={handleClick}
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className="input-base"
+          ></InputBase>
+          {visible ? (
+            <div>
+              <InputBase
+                placeholder={"Take a note"}
+                value={content}
+                onChange={(event) => setContent(event.target.value)}
+                className="input-base"
+              ></InputBase>
+              <div className="actionBar">
+                <IconButton>
                   <ActionBar putLabel={(label) => setLabel(label)}></ActionBar>
+                </IconButton>
+                <IconButton>
                   <ColorPicker
                     putColor={(color) => setColor(color)}
                   ></ColorPicker>
-                  <Button onClick={handleClickAway}>Close</Button>
-                </div>
+                </IconButton>
+
+                <Button onClick={handleClickAway}>Close</Button>
               </div>
-            ) : null}
-          </Collapse>
-        </Paper>
-      </div>
+            </div>
+          ) : null}
+        </Collapse>
+      </Paper>
+    </div>
     // {/* </ClickAwayListener> */}
   );
 }

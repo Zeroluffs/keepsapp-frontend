@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 
-import {
-  Paper,
-  Button,
-  InputBase,
-} from "@material-ui/core";
+import { Paper, Button, InputBase } from "@material-ui/core";
 import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
@@ -17,21 +13,26 @@ const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
 
-
-
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    outline: 0,
   },
   wrapper: {
     display: "flex",
     flexDirection: "column",
+  },
+  modal: {
+    "&:focus": {
+      outline: "none",
+    },
+    "&:active": {
+      outline: "none",
+    },
   },
   keepBG: {
     backgroundColor: (test) => {
@@ -62,16 +63,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditKeep(props) {
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
   const [color, setColor] = useState("");
   const [content, setContent] = useState("");
   let test = { color: color };
   const classes = useStyles(test);
- 
+
   const handleUpdate = async (keep) => {
-    
     if (title || color || label || content.length > 0) {
       const newKeep = {
         title: title.length > 0 ? title : keep.title,
@@ -92,7 +91,7 @@ export default function EditKeep(props) {
     setContent("");
   };
   const body = (
-    <div className="keepMake">
+    <div className={classes.modal}>
       <Paper
         elevation={2}
         style={{ display: "inline-block", alignItems: "center" }}
@@ -136,6 +135,14 @@ export default function EditKeep(props) {
     <div>
       {!props.show ? null : (
         <Modal
+          disableAutoFocus={true}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            outline: "none",
+          }}
+          className={classes.modal}
           open={props.show}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
