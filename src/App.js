@@ -16,7 +16,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Paper style={{ height: "100vh" }} className="keepContainer">
         <NavBar check={darkMode} change={() => setDarkMode(!darkMode)} />
-        <CreateKeep />
+        <CreateKeep darkMode={darkMode} />
         <Keeps />
       </Paper>
     </ThemeProvider>

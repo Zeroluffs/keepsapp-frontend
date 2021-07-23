@@ -41,8 +41,13 @@ const useStyles = makeStyles((theme) => ({
         return "#b2a429";
       }
       if (test.color === "#FFFFFF") {
-        return "#e4f0e2";
+        return "";
       }
+
+      if (test.color === "#424242") {
+        return "#424242";
+      }
+      return "";
     },
   },
 }));
@@ -51,7 +56,7 @@ const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
 
-export default function CreateKeep() {
+export default function CreateKeep({ darkMode }) {
   const theme = createTheme({
     palette: {
       primary: {
@@ -81,7 +86,7 @@ export default function CreateKeep() {
         title: title,
         description: content,
         label: label,
-        color: color,
+        color: color === "#424242" ? "" : color,
       };
       addKeep(keep);
       setVisible(false);
@@ -148,6 +153,7 @@ export default function CreateKeep() {
                 </IconButton>
                 <IconButton>
                   <ColorPicker
+                    darkMode={darkMode}
                     putColor={(color) => setColor(color)}
                   ></ColorPicker>
                 </IconButton>
