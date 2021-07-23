@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import {
-  Paper,
-  Button,
-  InputBase,
-  Collapse,
-  Typography,
-} from "@material-ui/core";
+import { Paper, Button, InputBase, Collapse } from "@material-ui/core";
 import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
 import IconButton from "@material-ui/core/IconButton";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles";
-import { purple } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -57,18 +49,6 @@ const api = axios.create({
 });
 
 export default function CreateKeep({ darkMode }) {
-  const theme = createTheme({
-    palette: {
-      primary: {
-        // Purple and green play nicely together.
-        main: purple[500],
-      },
-      secondary: {
-        // This is green.A700 as hex.
-        main: "#11cb5f",
-      },
-    },
-  });
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");

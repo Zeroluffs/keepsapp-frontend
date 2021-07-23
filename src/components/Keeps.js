@@ -3,7 +3,6 @@ import Container from "@material-ui/core/Container";
 import Masonry from "react-masonry-css";
 import KeepCard from "./KeepCard";
 import axios from "axios";
-import { Paper } from "@material-ui/core";
 
 import "../App.css";
 
