@@ -6,6 +6,7 @@ import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
 import IconButton from "@material-ui/core/IconButton";
+
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -32,9 +33,13 @@ const useStyles = makeStyles((theme) => ({
         return "#b2a429";
       }
       if (test.color === "#FFFFFF") {
-        return "#e4f0e2";
+        return "";
       }
-      return "#FFFFFF";
+
+      if (test.color === "#424242") {
+        return "#424242";
+      }
+      return "";
     },
   },
 }));
@@ -43,7 +48,7 @@ const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
 
-export default function CreateKeep() {
+export default function CreateKeep({ darkMode }) {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
@@ -61,7 +66,7 @@ export default function CreateKeep() {
         title: title,
         description: content,
         label: label,
-        color: color,
+        color: color === "#424242" ? "" : color,
       };
       addKeep(keep);
       setVisible(false);
@@ -98,6 +103,7 @@ export default function CreateKeep() {
         style={{ display: "inline-block", alignItems: "center" }}
         width="25%"
         className={classes.keepBG}
+        color="primary"
       >
         <Collapse
           in={visible}
@@ -105,6 +111,7 @@ export default function CreateKeep() {
           collapsedSize="2.7rem"
         >
           <InputBase
+            color="primary"
             placeholder={visible ? "Title" : "Take a note..."}
             onClick={handleClick}
             value={title}
@@ -114,6 +121,7 @@ export default function CreateKeep() {
           {visible ? (
             <div>
               <InputBase
+                color="primary"
                 placeholder={"Take a note"}
                 value={content}
                 onChange={(event) => setContent(event.target.value)}
@@ -125,6 +133,7 @@ export default function CreateKeep() {
                 </IconButton>
                 <IconButton>
                   <ColorPicker
+                    darkMode={darkMode}
                     putColor={(color) => setColor(color)}
                   ></ColorPicker>
                 </IconButton>
@@ -136,6 +145,7 @@ export default function CreateKeep() {
         </Collapse>
       </Paper>
     </div>
+
     // {/* </ClickAwayListener> */}
   );
 }

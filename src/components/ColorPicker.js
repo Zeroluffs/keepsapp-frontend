@@ -42,7 +42,7 @@ export default function ColorPicker(props) {
           width={"74px"}
           circleSize={16}
           colors={[
-            "#FFFFFF",
+            props.darkMode ? "#424242" : "#FFFFFF",
             "#aa2e25",
             "#a31545",
             "#6d1b7b",
