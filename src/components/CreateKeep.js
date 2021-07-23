@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { Paper, Button, InputBase, Collapse } from "@material-ui/core";
+import {
+  Paper,
+  Button,
+  InputBase,
+  Collapse,
+  Typography,
+} from "@material-ui/core";
 import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
 import IconButton from "@material-ui/core/IconButton";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
+
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -34,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
       if (test.color === "#FFFFFF") {
         return "#e4f0e2";
       }
-      return "#FFFFFF";
     },
   },
 }));
@@ -44,6 +52,18 @@ const api = axios.create({
 });
 
 export default function CreateKeep() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // Purple and green play nicely together.
+        main: purple[500],
+      },
+      secondary: {
+        // This is green.A700 as hex.
+        main: "#11cb5f",
+      },
+    },
+  });
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
@@ -98,6 +118,7 @@ export default function CreateKeep() {
         style={{ display: "inline-block", alignItems: "center" }}
         width="25%"
         className={classes.keepBG}
+        color="primary"
       >
         <Collapse
           in={visible}
@@ -105,6 +126,7 @@ export default function CreateKeep() {
           collapsedSize="2.7rem"
         >
           <InputBase
+            color="primary"
             placeholder={visible ? "Title" : "Take a note..."}
             onClick={handleClick}
             value={title}
@@ -114,6 +136,7 @@ export default function CreateKeep() {
           {visible ? (
             <div>
               <InputBase
+                color="primary"
                 placeholder={"Take a note"}
                 value={content}
                 onChange={(event) => setContent(event.target.value)}
@@ -136,6 +159,7 @@ export default function CreateKeep() {
         </Collapse>
       </Paper>
     </div>
+
     // {/* </ClickAwayListener> */}
   );
 }
