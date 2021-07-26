@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -15,12 +15,13 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import Keeps from "./Keeps";
 import CreateKeep from "./CreateKeep";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
-
+import WbIncandescentIcon from "@material-ui/icons/WbIncandescent";
+import LabelIcon from "@material-ui/icons/Label";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ArchiveIcon from "@material-ui/icons/Archive";
 import "../App.js";
 const drawerWidth = 240;
 
@@ -90,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer({ check, change, darkMode }) {
+  const [label, setLabel] = useState("");
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -157,32 +159,76 @@ export default function MiniDrawer({ check, change, darkMode }) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem
+            button={true}
+            onClick={() => {
+              setLabel("");
+            }}
+          >
+            <ListItemIcon>
+              <WbIncandescentIcon />
+            </ListItemIcon>
+
+            <ListItemText primary={"Notes"} />
+          </ListItem>
+          <ListItem
+            button={true}
+            onClick={() => {
+              setLabel("Work");
+              console.log("hello");
+            }}
+          >
+            <ListItemIcon>
+              <LabelIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Work"} />
+          </ListItem>
+          <ListItem
+            button={true}
+            onClick={() => {
+              setLabel("Personal");
+              console.log("hello");
+            }}
+          >
+            <ListItemIcon>
+              <LabelIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Personal"} />
+          </ListItem>
+          <ListItem
+            button={true}
+            onClick={() => {
+              setLabel("Education");
+              console.log("hello");
+            }}
+          >
+            <ListItemIcon>
+              <LabelIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Education"} />
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem>
+            <ListItemIcon>
+              <ArchiveIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Archived Notes"} />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Bin"} />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <div className="keepContainer">
           <CreateKeep darkMode={darkMode}></CreateKeep>
-          <Keeps></Keeps>
+          <Keeps label={label}></Keeps>
         </div>
       </main>
     </div>
