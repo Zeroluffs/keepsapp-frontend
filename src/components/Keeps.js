@@ -9,12 +9,16 @@ import "../App.css";
 const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
-export default function Keeps() {
+export default function Keeps(props) {
   const [keeps, setKeeps] = useState([]);
 
   useEffect(() => {
-    api.get("/keeps").then((res) => setKeeps(res.data));
-  }, []);
+    if (props.label !== "") {
+      api.get(`keeps/${props.label}`).then((res) => setKeeps(res.data));
+    } else {
+      api.get("/keeps").then((res) => setKeeps(res.data));
+    }
+  }, [props]);
 
   const handleDelete = async (keepID) => {
     await api.delete(`/keeps/${keepID}`);
