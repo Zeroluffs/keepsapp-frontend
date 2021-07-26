@@ -14,7 +14,7 @@ export default function Keeps(props) {
 
   useEffect(() => {
     if (props.label !== "") {
-      api.get(`keeps/${props.label}`).then((res) => setKeeps(res.data));
+      api.get(`keeps/label/${props.label}`).then((res) => setKeeps(res.data));
     } else {
       api.get("/keeps").then((res) => setKeeps(res.data));
     }
