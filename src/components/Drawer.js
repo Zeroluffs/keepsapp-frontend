@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -23,6 +23,7 @@ import LabelIcon from "@material-ui/icons/Label";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import "../App.js";
+import { ThemeContext } from "../context/ThemeContext";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +91,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer({ check, change, darkMode }) {
+export default function MiniDrawer() {
+  const dlMode = useContext(ThemeContext);
+  const darkMode = dlMode.state.darkMode;
   const [label, setLabel] = useState("");
   const [keep, setKeep] = useState({});
   const classes = useStyles();
@@ -131,7 +134,17 @@ export default function MiniDrawer({ check, change, darkMode }) {
           </Typography>
           <div className={classes.appbarButtons}>
             <IconButton>
-              <Brightness4Icon onClick={change}></Brightness4Icon>
+              <Brightness4Icon
+                onClick={() => {
+                  if (darkMode) {
+                    dlMode.dispatch({ type: "LIGHTMODE" });
+                    localStorage.setItem("theme", "light");
+                  } else {
+                    dlMode.dispatch({ type: "DARKMODE" });
+                    localStorage.setItem("theme", "dark");
+                  }
+                }}
+              ></Brightness4Icon>
             </IconButton>
           </div>
         </Toolbar>
@@ -230,7 +243,7 @@ export default function MiniDrawer({ check, change, darkMode }) {
         <div className="keepContainer">
           <CreateKeep
             putKeep={(keep) => setKeep(keep)}
-            darkMode={darkMode}
+            // darkMode={darkMode}
           ></CreateKeep>
           <Keeps keep={keep} label={label}></Keeps>
         </div>

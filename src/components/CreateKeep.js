@@ -6,7 +6,6 @@ import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
 import IconButton from "@material-ui/core/IconButton";
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -48,7 +47,7 @@ const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
 
-export default function CreateKeep({ darkMode, putKeep }) {
+export default function CreateKeep({ putKeep }) {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
@@ -134,7 +133,6 @@ export default function CreateKeep({ darkMode, putKeep }) {
                 </IconButton>
                 <IconButton>
                   <ColorPicker
-                    darkMode={darkMode}
                     putColor={(color) => setColor(color)}
                   ></ColorPicker>
                 </IconButton>
