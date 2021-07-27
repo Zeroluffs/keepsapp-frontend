@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import MiniDrawer from "./components/Drawer";
+import { ThemeContext } from "./context/ThemeContext";
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const dlMode = useContext(ThemeContext);
+  console.log(dlMode.state.darkMode);
   const theme = createTheme({
     palette: {
-      type: darkMode ? "dark" : "light",
+      type: dlMode.state.darkMode ? "dark" : "light",
     },
   });
   return (
     <ThemeProvider theme={theme}>
-      <MiniDrawer
-        darkMode={darkMode}
-        check={darkMode}
-        change={() => setDarkMode(!darkMode)}
-      ></MiniDrawer>
+      <MiniDrawer></MiniDrawer>
 
       {/* <Paper style={{ height: "100vh" }} className="keepContainer">
         <NavBar check={darkMode} change={() => setDarkMode(!darkMode)} /> */}

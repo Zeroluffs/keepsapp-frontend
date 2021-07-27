@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ColorLensIcon from "@material-ui/icons/ColorLens";
 import Menu from "@material-ui/core/Menu";
 import Fade from "@material-ui/core/Fade";
 import { CirclePicker } from "react-color";
-
+import { ThemeContext } from "../context/ThemeContext";
 export default function ColorPicker(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  const dlMode = useContext(ThemeContext);
+  const darkMode = dlMode.state.darkMode;
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,7 +43,7 @@ export default function ColorPicker(props) {
           width={"74px"}
           circleSize={16}
           colors={[
-            props.darkMode ? "#424242" : "#FFFFFF",
+            darkMode ? "#424242" : "#FFFFFF",
             "#aa2e25",
             "#a31545",
             "#6d1b7b",
