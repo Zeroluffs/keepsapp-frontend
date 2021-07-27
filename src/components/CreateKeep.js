@@ -67,6 +67,9 @@ export default function CreateKeep({ putKeep }) {
         label: label,
         color: color === "#424242" ? "" : color,
       };
+      if (color === "#ffffff") {
+        keep.color = "";
+      }
       putKeep(keep);
       addKeep(keep);
       setVisible(false);

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect} from "react";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import MiniDrawer from "./components/Drawer";
