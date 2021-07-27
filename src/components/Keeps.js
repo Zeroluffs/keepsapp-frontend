@@ -11,7 +11,6 @@ const api = axios.create({
 });
 export default function Keeps(props) {
   const [keeps, setKeeps] = useState([]);
-
   useEffect(() => {
     if (props.label !== "") {
       api.get(`keeps/label/${props.label}`).then((res) => setKeeps(res.data));
@@ -20,6 +19,12 @@ export default function Keeps(props) {
     }
   }, [props]);
 
+  useEffect(() => {
+    let newKeeps = [...keeps];
+    newKeeps.push(props.keep);
+    setKeeps(newKeeps);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleDelete = async (keepID) => {
     await api.delete(`/keeps/${keepID}`);
     const newKeeps = keeps.filter((keep) => keep._id !== keepID);
