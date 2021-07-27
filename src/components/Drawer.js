@@ -138,8 +138,10 @@ export default function MiniDrawer() {
                 onClick={() => {
                   if (darkMode) {
                     dlMode.dispatch({ type: "LIGHTMODE" });
+                    localStorage.setItem("theme", "light");
                   } else {
                     dlMode.dispatch({ type: "DARKMODE" });
+                    localStorage.setItem("theme", "dark");
                   }
                 }}
               ></Brightness4Icon>

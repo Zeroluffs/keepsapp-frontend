@@ -1,16 +1,30 @@
-import React, { useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import MiniDrawer from "./components/Drawer";
 import { ThemeContext } from "./context/ThemeContext";
 function App() {
   const dlMode = useContext(ThemeContext);
-  console.log(dlMode.state.darkMode);
   const theme = createTheme({
     palette: {
       type: dlMode.state.darkMode ? "dark" : "light",
     },
   });
+
+  useEffect(() => {
+    const existingTheme = localStorage.getItem("theme");
+    if (existingTheme) {
+      if (existingTheme === "light") {
+        dlMode.dispatch({ type: "LIGHTMODE" });
+      } else {
+        dlMode.dispatch({ type: "DARKMODE" });
+      }
+    } else {
+      localStorage.setItem("theme", "light");
+      dlMode.dispatch({ type: "LIGHTMODE" });
+    }
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <MiniDrawer></MiniDrawer>
