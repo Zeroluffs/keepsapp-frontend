@@ -55,9 +55,13 @@ const useStyles = makeStyles((theme) => ({
         return "#b2a429";
       }
       if (test.color === "#FFFFFF") {
-        return "#e4f0e2";
+        return "";
       }
-      return "#FFFFFF";
+
+      if (test.color === "#424242") {
+        return "#424242";
+      }
+      return "";
     },
   },
 }));
