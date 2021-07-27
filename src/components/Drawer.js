@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer({ check, change, darkMode }) {
   const [label, setLabel] = useState("");
+  const [keep, setKeep] = useState({});
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -227,8 +228,11 @@ export default function MiniDrawer({ check, change, darkMode }) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <div className="keepContainer">
-          <CreateKeep darkMode={darkMode}></CreateKeep>
-          <Keeps label={label}></Keeps>
+          <CreateKeep
+            putKeep={(keep) => setKeep(keep)}
+            darkMode={darkMode}
+          ></CreateKeep>
+          <Keeps keep={keep} label={label}></Keeps>
         </div>
       </main>
     </div>

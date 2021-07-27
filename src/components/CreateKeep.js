@@ -48,7 +48,7 @@ const api = axios.create({
   baseURL: `http://localhost:3000/api`,
 });
 
-export default function CreateKeep({ darkMode }) {
+export default function CreateKeep({ darkMode, putKeep }) {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
@@ -68,6 +68,7 @@ export default function CreateKeep({ darkMode }) {
         label: label,
         color: color === "#424242" ? "" : color,
       };
+      putKeep(keep);
       addKeep(keep);
       setVisible(false);
       setTitle("");
@@ -84,7 +85,7 @@ export default function CreateKeep({ darkMode }) {
       .post("keeps", keep)
       .then((res) => {
         if (res.status === 200) {
-          console.log("keep added");
+          putKeep(res.data);
         } else {
           const error = new Error(res.error);
           throw error;
