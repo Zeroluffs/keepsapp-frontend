@@ -24,6 +24,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import "../App.js";
 import { ThemeContext } from "../context/ThemeContext";
+import { KeepContext } from "../context/KeepContext";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer() {
+  const context = useContext(KeepContext);
   const dlMode = useContext(ThemeContext);
   const darkMode = dlMode.state.darkMode;
   const [label, setLabel] = useState("");
@@ -189,6 +191,7 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Work");
+              context.getKeeps("Work");
               console.log("hello");
             }}
           >
@@ -201,6 +204,7 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Personal");
+              context.getKeeps("Personal");
               console.log("hello");
             }}
           >
@@ -213,6 +217,7 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Education");
+              context.getKeeps("Education");
               console.log("hello");
             }}
           >

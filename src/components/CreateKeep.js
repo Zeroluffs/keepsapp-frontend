@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Paper, Button, InputBase, Collapse } from "@material-ui/core";
@@ -6,6 +6,7 @@ import "../App.css";
 import ActionBar from "./ActionBar";
 import ColorPicker from "./ColorPicker";
 import IconButton from "@material-ui/core/IconButton";
+import { KeepContext } from "../context/KeepContext";
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -48,6 +49,7 @@ const api = axios.create({
 });
 
 export default function CreateKeep({ putKeep }) {
+  const context = useContext(KeepContext);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
@@ -88,6 +90,22 @@ export default function CreateKeep({ putKeep }) {
       .then((res) => {
         if (res.status === 200) {
           putKeep(res.data);
+          const keeptoAdd = res.data;
+          // dispatch({
+          //   type: Action.ADD_TASK,
+          //   task: {
+          //     title: keeptoAdd.title,
+          //     color: keeptoAdd.color,
+          //     createdAt: keeptoAdd.createdAt,
+          //     description: keeptoAdd.description,
+          //     label: keeptoAdd.label,
+          //     status: keeptoAdd.status,
+          //     updatedAt: keeptoAdd.updatedAt,
+          //     __v: keeptoAdd.__v,
+          //     _id: keeptoAdd._id,
+          //   },
+          // });
+          context.addKeep(keeptoAdd);
         } else {
           const error = new Error(res.error);
           throw error;
