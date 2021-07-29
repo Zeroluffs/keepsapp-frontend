@@ -15,11 +15,7 @@ export default function KeepCard({ keep, handleDelete }) {
 
   return (
     <Fragment>
-      <div
-        onClick={() => {
-          toggleModal();
-        }}
-      >
+      <div>
         <Card style={{ backgroundColor: keep.color }} elevation={1}>
           <CardHeader
             title={keep.title}
@@ -30,7 +26,11 @@ export default function KeepCard({ keep, handleDelete }) {
               </IconButton>
             }
           ></CardHeader>
-          <CardContent>
+          <CardContent
+            onClick={() => {
+              toggleModal();
+            }}
+          >
             <Typography variant="body2" color="textSecondary">
               {keep.description}
             </Typography>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
+import { KeepContext } from "../context/KeepContext";
 import { Paper, Button, InputBase } from "@material-ui/core";
 import "../App.css";
 import ActionBar from "./ActionBar";
@@ -55,14 +55,19 @@ const useStyles = makeStyles((theme) => ({
         return "#b2a429";
       }
       if (test.color === "#FFFFFF") {
-        return "#e4f0e2";
+        return "";
       }
-      return "#FFFFFF";
+
+      if (test.color === "#424242") {
+        return "#424242";
+      }
+      return "";
     },
   },
 }));
 
 export default function EditKeep(props) {
+  const context = useContext(KeepContext);
   const [title, setTitle] = useState("");
   const [label, setLabel] = useState("");
   const [color, setColor] = useState("");
@@ -80,7 +85,8 @@ export default function EditKeep(props) {
       };
       try {
         const response = await api.put(`/keeps/${keep._id}`, newKeep);
-        console.log(response);
+        console.log(response.data);
+        context.updateKeep(response.data)
         setTitle("");
         setContent("");
       } catch (error) {

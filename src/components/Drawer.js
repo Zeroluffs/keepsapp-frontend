@@ -189,7 +189,6 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Work");
-              console.log("hello");
             }}
           >
             <ListItemIcon>
@@ -201,7 +200,6 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Personal");
-              console.log("hello");
             }}
           >
             <ListItemIcon>
@@ -213,7 +211,6 @@ export default function MiniDrawer() {
             button={true}
             onClick={() => {
               setLabel("Education");
-              console.log("hello");
             }}
           >
             <ListItemIcon>
