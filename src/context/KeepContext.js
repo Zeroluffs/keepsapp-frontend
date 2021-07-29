@@ -38,12 +38,16 @@ export function KeepContextProvider(props) {
     // newKeeps.push(keepAdd);
     // setKeeps(newKeeps);
 
-    console.log("sup", keeptoAdd);
     dispatch({ type: Action.ADD_TASK, payload: keeptoAdd });
   }
 
   function updateKeep(keeptoUpdate) {
     dispatch({ type: Action.UPDATE_TASK, payload: keeptoUpdate });
+    let index = keeps.findIndex((task) => task._id === keeptoUpdate._id);
+
+    keeps.splice(index, 1, keeptoUpdate);
+
+    setKeeps(keeps.splice(index, 1, keeptoUpdate));
   }
 
   async function deleteKeep(_id) {

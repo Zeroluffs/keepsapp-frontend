@@ -11,16 +11,8 @@ const api = axios.create({
 });
 export default function Keeps(props) {
   const keepsC = useContext(KeepContext);
-  console.log("im here", keepsC.tasks);
-  // console.log(keepsC.tasks);
   const [keeps, setKeeps] = useState([]);
-  // useEffect(() => {
-  //   if (props.label !== "") {
-  //     api.get(`keeps/label/${props.label}`).then((res) => setKeeps(res.data));
-  //   } else {
-  //     api.get("/keeps").then((res) => setKeeps(res.data));
-  //   }
-  // }, [props]);
+  const [arrayLabel, setArrayLabel] = useState([]);
 
   // useEffect(() => {
   //   let newKeeps = [...keeps];
@@ -28,6 +20,21 @@ export default function Keeps(props) {
   //   setKeeps(newKeeps);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (props.label !== "") {
+      let newArray = arrayLabel.filter((keep) => keep.label === props.label);
+      setKeeps(newArray);
+    } else {
+      setKeeps(keepsC.tasks);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+  useEffect(() => {
+    setKeeps(keepsC.tasks);
+    setArrayLabel(keepsC.tasks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keepsC]);
   const handleDelete = async (keepID) => {
     await api.delete(`/keeps/${keepID}`);
     keepsC.deleteKeep(`${keepID}`);
@@ -45,7 +52,7 @@ export default function Keeps(props) {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {keepsC.tasks.map((keep) => (
+        {keeps.map((keep) => (
           <div key={keep._id}>
             <KeepCard keep={keep} handleDelete={handleDelete}></KeepCard>
           </div>
